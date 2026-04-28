@@ -1,4 +1,6 @@
 import os
+import asyncio
+import httpx
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -40,3 +42,17 @@ app.include_router(wallet_router)
 @app.get("/")
 async def health_check():
     return {"status": "ChainCV is live"}
+
+async def self_ping():
+    while True:
+        await asyncio.sleep(600)
+        try:
+            url = os.getenv("RENDER_EXTERNAL_URL", "https://chaincv.onrender.com")
+            async with httpx.AsyncClient() as client:
+                await client.get(f"{url}/")
+        except:
+            pass
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(self_ping())
