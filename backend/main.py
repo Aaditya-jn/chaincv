@@ -44,15 +44,15 @@ async def health_check():
     return {"status": "ChainCV is live"}
 
 async def self_ping():
+    await asyncio.sleep(30)
     while True:
-        await asyncio.sleep(600)
         try:
-            url = os.getenv("RENDER_EXTERNAL_URL", "https://chaincv.onrender.com")
-            async with httpx.AsyncClient() as client:
-                await client.get(f"{url}/")
+            async with httpx.AsyncClient(timeout=10) as client:
+                await client.get("https://chaincv.onrender.com/")
         except:
             pass
+        await asyncio.sleep(540)
 
 @app.on_event("startup")
-async def startup_event():
+async def startup():
     asyncio.create_task(self_ping())
