@@ -44,7 +44,7 @@ export default function CompareMode({ currentAddress, onCompare, error }) {
           <input id="compare-wallet-input" type="text" value={secondAddress}
             onChange={(e) => { setSecondAddress(e.target.value); setValidationError('') }}
             placeholder="Paste second address"
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white placeholder-gray-500 font-mono text-xs outline-none focus:border-sol-gold/40 transition-colors"
+            className="w-full bg-black border border-white/10 rounded-xl px-3 py-2.5 text-white placeholder-gray-500 font-mono text-xs focus:outline-none focus:border-sol-green"
             spellCheck={false} />
         </div>
 
